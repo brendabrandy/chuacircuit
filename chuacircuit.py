@@ -9,14 +9,13 @@ from __future__ import division, print_function
 
 from numpy import array, arange
 from pylab import plot, show
-from visual import *
+#from visual import *
 
-"""
+
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 fig = plt.figure()
 ax = fig.add_subplot(111, projection='3d')
-"""
 
 
 """
@@ -40,6 +39,9 @@ L = 1.0 / 7.0
 
 #for the double scroll attractor
 r_array = array([ 0.15264, -0.02281 ,0.38127  ],float)
+
+
+#r_array = array([ 2, 0 ,0  ],float)
 
 #coefficients for double scroll attractor
 c1 = 1.0 / 9.0
@@ -113,12 +115,12 @@ for t in tpoints:
 #plot (xpoints,zpoints)
 #show()
 
-"""
+
 ax.plot(xpoints, ypoints, zpoints, label = "double scroll")
 ax.legend()
 plt.show()
-"""
 
+"""
 #for animation
 ball = sphere(make_trail=True, trail_type="curve", interval=1, retain=10000)
 ball.radius = 0
@@ -126,3 +128,4 @@ ball.pos = (xpoints[0],ypoints[0],zpoints[0])
 for i in range(1, int(N)):
     rate(120)
     ball.pos = (xpoints[i], ypoints[i], zpoints[i])
+"""
