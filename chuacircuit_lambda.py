@@ -7,7 +7,7 @@ Created on Wed Nov 18 23:05:30 2015
 
 from __future__ import division, print_function
 
-from numpy import array, arange, sqrt
+from numpy import array, arange, sqrt, log2
 from pylab import plot, show
 #from visual import *
 
@@ -103,8 +103,6 @@ for t in tpoints:
 	k4 = h*f(r_array+k3, t+h)
 	    
 	r_array += (k1+2*k2+2*k3+k4)/6.0
-	
-	i = i + 1
 
 
 #find range f xyz
@@ -125,8 +123,9 @@ limit_dist = 0.05* unit_mag
 print (limit_dist)
 dtest = 0    
 ref_pt = 0 #start from 0, find nearest point              
-ref_list = []
-dist_list = []
+ref_list = [] #gives the reference points
+dist_list = [] #gives the distance between two points
+a_lamb = 0
 
 #find nearest point to 0
 comp_pt = ntest(ref_pt)
@@ -135,20 +134,34 @@ comp_pt = ntest(ref_pt)
 while ref_pt < 3*N/4: #as long as reference point is less than 3/4 of total num of points
     print("ref_pt: ",ref_pt)
     print ("comp_pt: ",comp_pt)
-    #record down values between two nearest points
+    init_ref_pt = ref_pt
+    
+    di = dist(ref_pt, comp_pt)
+    #record down values between two nearest points as long as it is less
+    #than limit_dist
     while ((dtest < limit_dist) and comp_pt < N):
         ref_list.append(ref_pt)
         dtest = dist(ref_pt, comp_pt)
         dist_list.append(dtest)
         ref_pt += 1
-        comp_pt += 1
-        
+        comp_pt += 1     
+    final_ref_pt = ref_pt
+    df = dtest
+    ratio = df/di
+    print("df/di: ",ratio)
+    t = final_ref_pt - init_ref_pt
+    lamb = log2(ratio) / float(t) #lambda for one portion of it
+    a_lamb += lamb
+    
     ref_pt += 500
     if ref_pt < N:
         comp_pt = ntest(ref_pt) #find another nearest point
         dtest = dist(ref_pt, comp_pt)
+    print("lamb: ", lamb)
+        
+print ("AVERAGE LAMBDA IS ", a_lamb)
 
-       
+
 """
 
 #animation
